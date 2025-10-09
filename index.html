@@ -125,33 +125,52 @@
     </div>
     
     <script>
-        // Automatically try to open the app
-        const habitId = window.location.pathname.split('/habit/')[1] || '1';
-        const appUrl = `habittracker://habit/${habitId}`;
+        // Check if this is a deep link to a specific habit or just the home page
+        const path = window.location.pathname;
+        const habitMatch = path.match(/\/habit\/(\d+)/);
         
-        // Set the button href
-        document.getElementById('open-app-btn').href = appUrl;
+        let appUrl;
+        let pageMessage;
         
-        // Try to open app automatically on page load
-        window.addEventListener('load', function() {
-            // Wait a moment then try to open the app
+        if (habitMatch && habitMatch[1]) {
+            // Deep link to specific habit
+            const habitId = habitMatch[1];
+            appUrl = `habittracker://habit/${habitId}`;
+            pageMessage = 'To view this habit, please open the link in the Habit Tracker app.';
+        } else {
+            // Root URL - just open the app home
+            appUrl = 'habittracker://app';
+            pageMessage = 'Open the Habit Tracker app to start building better habits!';
+        }
+        
+        // Update the page message
+        document.addEventListener('DOMContentLoaded', function() {
+            const messageElement = document.querySelector('.container > p');
+            if (messageElement) {
+                messageElement.textContent = pageMessage;
+            }
+            
+            // Set the button href
+            document.getElementById('open-app-btn').href = appUrl;
+            
+            // Try to open app automatically on page load
             setTimeout(function() {
                 window.location.href = appUrl;
             }, 100);
+            
+            // Show a message if user is still on the page after 2 seconds
+            setTimeout(function() {
+                const appCheck = document.getElementById('app-check');
+                if (appCheck) {
+                    const notice = document.createElement('p');
+                    notice.style.fontSize = '14px';
+                    notice.style.color = '#e74c3c';
+                    notice.style.marginTop = '16px';
+                    notice.textContent = 'App not installed? Download it below!';
+                    appCheck.appendChild(notice);
+                }
+            }, 2000);
         });
-        
-        // Show a message if user is still on the page after 2 seconds
-        setTimeout(function() {
-            const appCheck = document.getElementById('app-check');
-            if (appCheck) {
-                const notice = document.createElement('p');
-                notice.style.fontSize = '14px';
-                notice.style.color = '#e74c3c';
-                notice.style.marginTop = '16px';
-                notice.textContent = 'App not installed? Download it below!';
-                appCheck.appendChild(notice);
-            }
-        }, 2000);
     </script>
 </body>
 </html>
