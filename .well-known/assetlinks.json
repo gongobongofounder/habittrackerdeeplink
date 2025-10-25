@@ -18,6 +18,19 @@
         "C6:D0:31:59:05:C2:3C:C0:48:BD:91:B7:72:63:38:CE:BF:9E:71:D5:FA:5F:C2:F3:1C:8A:94:85:1E:A0:4F:90"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "it.atraj.habittracker",
+      "sha256_cert_fingerprints": [
+        "99:64:65:ED:C4:69:06:8C:29:BF:0A:A6:A8:46:53:D3:05:12:0F:91:FE:8B:7F:F3:9B:38:15:A7:44:A0:F2:37"
+      ]
+    }
   }
 ]
+
 
